@@ -1,0 +1,71 @@
+version: '3.8'
+services:
+
+  # The nginx Web Server
+  web:
+    build:
+      context: ./
+      dockerfile: docker/web.dockerfile
+    working_dir: /var/www
+    ports:
+      - 8080:80
+    volumes:
+      - ./:/var/www
+    depends_on:
+      - "app"
+      - "mariadb"
+    networks:
+      - app-network
+
+  # The PHP Application
+  app:
+    build:
+      context: ./
+      dockerfile: docker/app.dockerfile
+    working_dir: /var/www
+    environment:
+      DB_PORT: 3306
+      DB_HOST: mariadb
+      MAIL_HOST: mailhog
+      MAIL_PORT: 1025
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    volumes:
+      - ./:/var/www
+      - ./docker/php.ini:/usr/local/etc/php/php.ini
+    networks:
+      - app-network
+
+  mariadb:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_USER: sb_project
+      MYSQL_PASSWORD: sb_project
+      MYSQL_DATABASE : sb_project
+      MYSQL_ROOT_PASSWORD : root
+    ports:
+      - 33060:3306
+    networks:
+      - app-network
+
+  # Mailhog
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - 1025:1025
+      - 8025:8025
+    networks:
+      - app-network
+
+  # Redis
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
