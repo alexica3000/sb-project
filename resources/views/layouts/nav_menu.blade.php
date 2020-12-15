@@ -2,5 +2,6 @@
     <nav class="nav d-flex justify-content-between">
         <a class="p-2 text-muted" href="{{ route('about') }}">About</a>
         <a class="p-2 text-muted" href="{{ route('contacts') }}">Contacts</a>
+        <a class="p-2 text-muted" href="{{ route('posts.index') }}">Posts</a>
     </nav>
 </div>
