@@ -15,7 +15,7 @@ Route::post('/contacts', [MessageController::class, 'store'])->name('store_messa
 Route::prefix('/dashboard')->middleware(['auth'])->group(function() {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/admin/feedbacks');
+    Route::get('/messages', [MessageController::class, 'index'])->name('messages');
 });
 
 require __DIR__.'/auth.php';
-

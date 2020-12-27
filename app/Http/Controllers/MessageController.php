@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreMessageRequest;
 use App\Models\Message;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
@@ -12,11 +13,13 @@ class MessageController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function index()
     {
-        //
+        $messages = Message::all()->sortByDesc('created_at');
+
+        return view('pages.admin.messages', compact('messages'));
     }
 
     /**
