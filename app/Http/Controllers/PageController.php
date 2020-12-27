@@ -16,7 +16,7 @@ class PageController extends Controller
 
     public function aboutPage()
     {
-        dd('about page');
+        return view('pages.about');
     }
 
     public function contactsPage()

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [PageController::class, 'homePage'])->name('home');
 Route::get('/about', [PageController::class, 'aboutPage'])->name('about');
 Route::get('/contacts', [PageController::class, 'contactsPage'])->name('contacts');
-Route::get('/posts', [PostController::class, 'index']);
+Route::get('/posts', [PostController::class, 'index'])->name('posts_front');
 Route::get('/posts/show/{post}', [PostController::class, 'show'])->name('post_show_front');
 Route::post('/contacts', [MessageController::class, 'store'])->name('store_message');
 
