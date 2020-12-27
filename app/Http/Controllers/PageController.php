@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
+    public function homePage()
+    {
+        return view('pages.home');
+    }
+
     public function aboutPage()
     {
         dd('about page');
@@ -13,6 +18,6 @@ class PageController extends Controller
 
     public function contactsPage()
     {
-        dd('contacts page');
+        return view('pages.contacts');
     }
 }

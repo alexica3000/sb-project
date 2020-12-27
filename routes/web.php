@@ -5,9 +5,10 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', [PageController::class, 'homePage'])->name('home');
+Route::get('/about', [PageController::class, 'aboutPage'])->name('about');
+Route::get('/contacts', [PageController::class, 'contactsPage'])->name('contacts');
+Route::resource('/posts', PostController::class);
 
 Route::prefix('/dashboard')->middleware(['auth'])->group(function() {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
@@ -16,6 +17,3 @@ Route::prefix('/dashboard')->middleware(['auth'])->group(function() {
 
 require __DIR__.'/auth.php';
 
-Route::get('/about', [PageController::class, 'aboutPage'])->name('about');
-Route::get('/contacts', [PageController::class, 'contactsPage'])->name('contacts');
-Route::resource('/posts', PostController::class);
