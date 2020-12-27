@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -33,19 +34,23 @@ class PostController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
     public function store(StorePostRequest $request)
     {
-        $post = new Post();
-        $post->title = $request->title;
-        $post->alias = $request->alias;
-        $post->short = $request->short;
-        $post->description = $request->description;
-        $post->is_published = $request->boolean('is_published');
-        $post->save();
+        try {
+            $post = new Post();
+            $post->title = $request->title;
+            $post->alias = $request->alias;
+            $post->short = $request->short;
+            $post->description = $request->description;
+            $post->is_published = $request->boolean('is_published');
+            $post->save();
 
-        return redirect()->back();
+            return redirect()->back()->with(['status' => 'Post has been added.']);
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['Post has not been added.']);
+        }
     }
 
     /**

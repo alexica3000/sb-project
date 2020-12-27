@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
     public function homePage()
     {
-        return view('pages.home');
+        $posts = Post::orderBy('created_at', 'desc')->get();
+
+        return view('pages.home', compact('posts'));
     }
 
     public function aboutPage()

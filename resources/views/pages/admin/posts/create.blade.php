@@ -11,18 +11,19 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     @include('components.errors')
+                    @include('components.status')
 
                     <form method="post" action="{{ route('posts.store') }}">
                         @csrf
 
                         <div class="form-group">
                             <label for="title">Title</label>
-                            <input type="email" class="form-control" id="title" name="title">
+                            <input type="text" class="form-control" id="title" name="title">
                         </div>
 
                         <div class="form-group">
                             <label for="alias">Alias</label>
-                            <input type="email" class="form-control" id="alias" name="alias">
+                            <input type="text" class="form-control" id="alias" name="alias">
                         </div>
 
                         <div class="form-group">
