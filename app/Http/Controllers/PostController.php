@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePostRequest;
+use App\Models\Post;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -19,11 +22,11 @@ class PostController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function create()
     {
-        //
+        return view('pages.admin.posts.create');
     }
 
     /**
@@ -32,9 +35,17 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
-        //
+        $post = new Post();
+        $post->title = $request->title;
+        $post->alias = $request->alias;
+        $post->short = $request->short;
+        $post->description = $request->description;
+        $post->is_published = $request->boolean('is_published');
+        $post->save();
+
+        return redirect()->back();
     }
 
     /**
