@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
-        <title>SB Project</title>
+        <title>@yield('title', 'SB Project')</title>
 
         <link rel="icon" href="{{ asset("favicon.ico") }}" sizes="32x32" type="image/png">
         <link rel="icon" href="{{ asset("favicon.ico") }}" sizes="16x16" type="image/png">

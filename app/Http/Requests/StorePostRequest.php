@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 
 class StorePostRequest extends FormRequest
 {
@@ -25,10 +26,17 @@ class StorePostRequest extends FormRequest
     {
         return [
             'title'        => 'required|min:5|max:100',
-            'alias'        => 'required|string',
+            'alias'        => 'required|string|unique:posts,alias',
             'short'        => 'required|string|max:255',
             'description'  => 'required',
             'is_published' => 'sometimes|accepted'
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'alias' => Str::slug($this->alias),
+        ]);
     }
 }
