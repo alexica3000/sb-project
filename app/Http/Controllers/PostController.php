@@ -29,13 +29,7 @@ class PostController extends Controller
     public function store(StorePostRequest $request)
     {
         try {
-            $post = new Post();
-            $post->title = $request->title;
-            $post->alias = $request->alias;
-            $post->short = $request->short;
-            $post->description = $request->description;
-            $post->is_published = $request->boolean('is_published');
-            $post->save();
+            Post::create($request->validated());
 
             return redirect()->back()->with(['status' => 'Post has been added.']);
         } catch (\Exception $e) {

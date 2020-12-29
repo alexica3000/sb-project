@@ -10,4 +10,9 @@ class Post extends Model
     use HasFactory;
 
     protected $fillable = ['title', 'alias', 'short', 'description', 'is_published'];
+
+    public function setIsPublishedAttribute()
+    {
+        $this->attributes['is_published'] = request()->boolean('is_published');
+    }
 }
