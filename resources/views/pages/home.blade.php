@@ -6,7 +6,7 @@
             Latest Posts
         </h3>
 
-        @if(!empty($posts) AND count($posts))
+        @if(!empty($posts) && count($posts))
             @foreach($posts as $post)
                 <div class="blog-post">
                     <h2 class="blog-post-title"><a href="{{ route('post_show_front', $post->id) }}">{{ $post->title }}</a></h2>
