@@ -29,10 +29,12 @@ class PostController extends Controller
     public function store(StorePostRequest $request)
     {
         try {
-            Post::create($request->validated());
+            $fields = $request->except('is_published');
+            Post::create($fields + ['is_published' => $request->has('is_published')]);
 
             return redirect()->back()->with(['status' => 'Post has been added.']);
         } catch (\Exception $e) {
+            logger()->error($e->getMessage());
             return redirect()->back()->withErrors(['Post has not been added.']);
         }
     }
