@@ -6,8 +6,12 @@
         <meta name="description" content="">
         <title>@yield('title', 'SB Project')</title>
 
-        <link rel="icon" href="{{ asset("favicon.ico") }}" sizes="32x32" type="image/png">
-        <link rel="icon" href="{{ asset("favicon.ico") }}" sizes="16x16" type="image/png">
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('/images/favicon/apple-touch-icon.png') }}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('/images/favicon/favicon-32x32.png') }}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/images/favicon/favicon-16x16.png') }}">
+        <link rel="manifest" href="{{ asset('/images/favicon/site.webmanifest') }}">
+        <meta name="msapplication-TileColor" content="#da532c">
+        <meta name="theme-color" content="#ffffff">
 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
         <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
