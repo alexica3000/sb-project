@@ -14,6 +14,7 @@
                     {!! $post->short !!}
                 </div>
             @endforeach
+                {{ $posts->links() }}
         @endif
     </div>
 @endsection
