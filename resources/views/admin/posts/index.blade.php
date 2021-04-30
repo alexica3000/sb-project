@@ -12,21 +12,21 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     <table class="min-w-full table-auto">
                         <thead class="justify-between">
-                            <tr class="bg-gray-800">
+                            <tr class="bg-gray-200 text-gray-800">
                                 <th class="px-16 py-2">
-                                    <span class="text-gray-300">Title</span>
+                                    <span>Title</span>
                                 </th>
                                 <th class="px-16 py-2">
-                                    <span class="text-gray-300">Description</span>
+                                    <span>Description</span>
                                 </th>
                                 <th class="px-16 py-2">
-                                    <span class="text-gray-300">Published</span>
+                                    <span>Published</span>
                                 </th>
                                 <th class="px-16 py-2">
-                                    <span class="text-gray-300">Created at</span>
+                                    <span>Created at</span>
                                 </th>
                                 <th class="px-16 py-2">
-                                    <span class="text-gray-300">Edit</span>
+                                    <span>Edit</span>
                                 </th>
                             </tr>
                         </thead>
@@ -47,9 +47,7 @@
                                             <span>{{ $post->created_at->format('d.m.Y') }}</span>
                                         </td>
                                         <td class="py-1">
-                                            <button class="text-xs bg-blue-500 text-white px-4 py-2 border rounded-md hover:bg-blue-400 hover:border-indigo-500 hover:text-black ">
-                                                Edit
-                                            </button>
+                                            <a href="{{ route('posts.edit', $post->id) }}" class="text-xs bg-blue-500 text-white px-4 py-2 border rounded-md hover:bg-blue-400 hover:border-indigo-500 hover:text-black">Edit</a>
                                             <button class="text-xs bg-red-500 text-white px-4 py-2 border rounded-md hover:bg-red-400 hover:border-indigo-500 hover:text-black ">
                                                 Delete
                                             </button>
