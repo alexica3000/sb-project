@@ -48,9 +48,16 @@
                                         </td>
                                         <td class="py-1">
                                             <a href="{{ route('posts.edit', $post->id) }}" class="text-xs bg-blue-500 text-white px-4 py-2 border rounded-md hover:bg-blue-400 hover:border-indigo-500 hover:text-black">Edit</a>
-                                            <button class="text-xs bg-red-500 text-white px-4 py-2 border rounded-md hover:bg-red-400 hover:border-indigo-500 hover:text-black ">
-                                                Delete
-                                            </button>
+                                            <form action="{{ route('posts.destroy', $post->id) }}" method="post">
+                                                @csrf
+                                                @method('delete')
+                                                <button
+                                                    class="text-xs bg-red-500 text-white px-4 py-2 border rounded-md hover:bg-red-400 hover:border-indigo-500 hover:text-black "
+                                                    onclick="if(confirm('Are you sure?')) this.closest('form').submit();"
+                                                >
+                                                    Delete
+                                                </button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach

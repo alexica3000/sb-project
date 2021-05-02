@@ -46,4 +46,11 @@ class PostController extends Controller
     {
         return view('pages.show_post', compact('post'));
     }
+
+    public function destroy(Post $post)
+    {
+        $post->delete();
+
+        return redirect()->route('posts.index')->with(['status' => 'The post has been deleted.']);
+    }
 }
