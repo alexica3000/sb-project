@@ -44,4 +44,8 @@
     </div>
 
     <button type="submit" class="btn btn-primary">{{ isset($post) ? 'Update post' : 'Add New Post' }}</button>
+    <a
+        class="btn btn-secondary"
+        onclick="if(confirm('Please confirm that you want to abandon this form.')) location.href='{{ route('posts.index') }}';"
+    >Cancel</a>
 </form>

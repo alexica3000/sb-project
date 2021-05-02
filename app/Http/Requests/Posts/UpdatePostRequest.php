@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Posts;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 
-class StorePostRequest extends FormRequest
+class UpdatePostRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,7 +26,7 @@ class StorePostRequest extends FormRequest
     {
         return [
             'title'        => 'required|min:5|max:100',
-            'alias'        => 'required|string|unique:posts,alias',
+            'alias'        => 'required|string|unique:posts,alias,' . $this->post->id,
             'short'        => 'required|string|max:255',
             'description'  => 'required',
             'is_published' => 'sometimes|accepted'
