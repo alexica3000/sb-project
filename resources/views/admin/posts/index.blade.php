@@ -12,7 +12,7 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     <table class="min-w-full table-auto">
                         <thead class="justify-between">
-                            <tr class="bg-gray-200 text-gray-800">
+                            <tr class="border-2 border-gray-200 bg-gray-200 text-gray-800">
                                 <th class="px-16 py-2">
                                     <span>Title</span>
                                 </th>
@@ -33,7 +33,7 @@
                         <tbody class="bg-gray-200">
                             @if(isset($posts) and count($posts))
                                 @foreach($posts as $post)
-                                    <tr class="bg-white border-4 border-gray-200">
+                                    <tr class="bg-white border-2 border-gray-200">
                                         <td>
                                             <span class="text-center ml-2 font-semibold">{{ $post->title }}</span>
                                         </td>
@@ -48,7 +48,7 @@
                                         </td>
                                         <td class="py-1">
                                             <a href="{{ route('posts.edit', $post->id) }}" class="text-xs bg-blue-500 text-white px-4 py-2 border rounded-md hover:bg-blue-400 hover:border-indigo-500 hover:text-black">Edit</a>
-                                            <form action="{{ route('posts.destroy', $post->id) }}" method="post">
+                                            <form action="{{ route('posts.destroy', $post->id) }}" method="post" class="inline">
                                                 @csrf
                                                 @method('delete')
                                                 <button
