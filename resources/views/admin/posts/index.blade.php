@@ -1,7 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Posts
+            <span>Posts</span>
+            <a href="{{ route('posts.create') }}" class="bg-blue-500 px-4 py-2 text-xs font-semibold tracking-wider text-white rounded hover:bg-blue-600">Add Post</a>
         </h2>
     </x-slot>
 

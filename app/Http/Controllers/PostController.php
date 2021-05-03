@@ -18,7 +18,7 @@ class PostController extends Controller
 
     public function create()
     {
-        return view('pages.admin.posts.create');
+        return view('admin.posts.create');
     }
 
     public function store(StorePostRequest $request)
