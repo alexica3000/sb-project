@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Posts\StorePostRequest;
 use App\Models\Post;
-use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
@@ -25,7 +24,7 @@ class PostController extends Controller
         $fields = $request->except('is_published');
         Post::create($fields + ['is_published' => $request->has('is_published')]);
 
-        return redirect()->back()->with(['status' => 'Post has been added.']);
+        return redirect()->route('posts.index')->with(['status' => 'Post has been added.']);
     }
 
     public function edit(Post $post)
@@ -38,7 +37,7 @@ class PostController extends Controller
         $fields = $request->except('is_published');
         $post->update($fields + ['is_published' => $request->has('is_published')]);
 
-        return redirect()->back()->with(['status' => 'Post has been updated.']);
+        return redirect()->route('posts.index')->with(['status' => 'Post has been updated.']);
     }
 
     public function show(Post $post)

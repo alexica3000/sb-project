@@ -42,7 +42,7 @@
                                             {{ $post->short }}
                                         </td>
                                         <td class="py-1">
-                                            <span>{{ $post->is_published }}</span>
+                                            <span>{{ $post->is_published ? 'yes' : ''  }}</span>
                                         </td>
                                         <td class="py-1">
                                             <span>{{ $post->created_at->format('d.m.Y') }}</span>
