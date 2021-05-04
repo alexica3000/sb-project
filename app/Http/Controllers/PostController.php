@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Posts\StorePostRequest;
-use App\Http\Requests\Posts\UpdatePostRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -34,7 +33,7 @@ class PostController extends Controller
         return view('admin.posts.edit', compact('post'));
     }
 
-    public function update(UpdatePostRequest $request, Post $post)
+    public function update(StorePostRequest $request, Post $post)
     {
         $fields = $request->except('is_published');
         $post->update($fields + ['is_published' => $request->has('is_published')]);
