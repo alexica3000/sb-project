@@ -25,7 +25,7 @@ class PushAllServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->app->singleton(Pushall::class, function() {
-            return new Pushall('private-key');
+            return new Pushall(config('services.pushall.key'));
         });
     }
 }
