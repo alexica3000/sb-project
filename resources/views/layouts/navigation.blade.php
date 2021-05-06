@@ -18,8 +18,8 @@
                     <x-nav-link :href="route('messages')" :active="request()->routeIs('messages')">
                         Messages
                     </x-nav-link>
-                    <x-nav-link :href="route('posts.create')" :active="request()->routeIs('posts.create')">
-                        Add Post
+                    <x-nav-link :href="route('posts.index')" :active="request()->routeIs('posts.index')">
+                        Posts
                     </x-nav-link>
                 </div>
             </div>
