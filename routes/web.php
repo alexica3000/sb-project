@@ -21,3 +21,9 @@ Route::prefix('/dashboard')->middleware(['auth'])->group(function() {
 });
 
 require __DIR__.'/auth.php';
+
+
+
+Route::get('/test', function(\App\Http\Services\Pushall $pushall) {
+    dd($pushall);
+});
