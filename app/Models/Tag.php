@@ -5,14 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Post extends Model
+class Tag extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'alias', 'short', 'description', 'is_published'];
-
-    public function tags()
+    public function posts()
     {
         return $this->belongsToMany(Tag::class, 'post_tag');
     }
 }
+
