@@ -1,6 +1,6 @@
-@extends('welcome')
+@extends('layouts.front-app')
 
-@section('title', 'About');
+@section('title', 'About')
 
 @section('content')
     <div class="col-md-8 blog-main">

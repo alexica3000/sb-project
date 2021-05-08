@@ -1,4 +1,4 @@
-@extends('welcome')
+@extends('layouts.front-app')
 
 @section('content')
     <div class="col-md-8 blog-main">
