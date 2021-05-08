@@ -5,7 +5,7 @@
 @if($tags->isNotEmpty())
     <div>
         @foreach($tags as $tag)
-            <a href="#" class="badge badge-secondary">{{ $tag->name }}</a>
+            <a href="{{ route('posts.tag', $tag) }}" class="badge badge-secondary">{{ $tag->name }}</a>
         @endforeach
     </div>
 @endif

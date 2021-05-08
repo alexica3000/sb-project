@@ -43,18 +43,15 @@ class PostController extends Controller
         /** @var Collection $postTags */
         $postTags = $post->tags->keyBy('name');
         $tags = collect(explode(',', $request->input('tags')))->keyBy(fn($item) => $item);
-
+        $syncIds = $postTags->intersectByKeys($tags)->pluck('id')->toArray();
         $tagsToAttach = $tags->diffKeys($postTags);
-        $tagsToDetach = $postTags->diffkeys($tags);
 
         foreach($tagsToAttach as $tag) {
             $tag = Tag::firstOrCreate(['name' => $tag]);
-            $post->tags()->attach($tag);
+            $syncIds[] = $tag->id;
         }
 
-        foreach($tagsToDetach as $tag) {
-            $post->tags()->detach($tag);
-        }
+        $post->tags()->sync($syncIds);
 
         return redirect()->route('posts.index')->with(['status' => 'Post has been updated.']);
     }

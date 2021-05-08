@@ -10,6 +10,7 @@ Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/contacts', [PageController::class, 'contacts'])->name('contacts');
 Route::get('/posts/show/{post}', [PageController::class, 'showPost'])->name('post_show_front');
+Route::get('/posts/tags/{tag}', [PageController::class, 'tag'])->name('posts.tag');
 Route::post('/contacts', [PageController::class, 'storeMessage'])->name('store_message');
 
 Route::prefix('/dashboard')->middleware(['auth'])->group(function() {
