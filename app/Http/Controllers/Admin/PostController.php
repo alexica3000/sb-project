@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Posts\StorePostRequest;
+use App\Http\Services\TagsSynchronizer;
 use App\Models\Post;
 
 class PostController extends Controller
@@ -19,10 +21,11 @@ class PostController extends Controller
         return view('admin.posts.create');
     }
 
-    public function store(StorePostRequest $request)
+    public function store(StorePostRequest $request, TagsSynchronizer $synchronizer)
     {
         $fields = $request->except('is_published');
-        Post::create($fields + ['is_published' => $request->has('is_published')]);
+        $post = Post::create($fields + ['is_published' => $request->has('is_published')]);
+        $synchronizer->sync(collect(explode(',', $request->input('tags'))), $post);
 
         return redirect()->route('posts.index')->with(['status' => 'Post has been added.']);
     }
@@ -32,17 +35,13 @@ class PostController extends Controller
         return view('admin.posts.edit', compact('post'));
     }
 
-    public function update(StorePostRequest $request, Post $post)
+    public function update(StorePostRequest $request, Post $post, TagsSynchronizer $synchronizer)
     {
         $fields = $request->except('is_published');
         $post->update($fields + ['is_published' => $request->has('is_published')]);
+        $synchronizer->sync(collect(explode(',', $request->input('tags'))), $post);
 
         return redirect()->route('posts.index')->with(['status' => 'Post has been updated.']);
-    }
-
-    public function show(Post $post)
-    {
-        return view('pages.show_post', compact('post'));
     }
 
     public function destroy(Post $post)
