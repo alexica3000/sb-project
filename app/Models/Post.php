@@ -9,10 +9,15 @@ class Post extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'alias', 'short', 'description', 'is_published'];
+    protected $fillable = ['title', 'alias', 'short', 'body', 'is_published'];
 
     public function tags()
     {
         return $this->belongsToMany(Tag::class, 'post_tag');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
