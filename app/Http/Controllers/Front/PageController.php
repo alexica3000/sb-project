@@ -1,0 +1,41 @@
+<?php
+
+namespace App\Http\Controllers\Front;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreMessageRequest;
+use App\Models\Message;
+use App\Models\Post;
+use Illuminate\Http\Request;
+
+class PageController extends Controller
+{
+    public function home()
+    {
+        $posts = Post::with(['tags'])->orderBy('created_at', 'desc')->paginate(4);
+
+        return view('front.pages.home', compact('posts'));
+    }
+
+    public function about()
+    {
+        return view('front.pages.about');
+    }
+
+    public function contacts()
+    {
+        return view('front.pages.contacts');
+    }
+
+    public function showPost(Post $post)
+    {
+        return view('front.pages.show_post', compact('post'));
+    }
+
+    public function storeMessage(StoreMessageRequest $request)
+    {
+        Message::create($request->validated());
+
+        return redirect(route('contacts'));
+    }
+}

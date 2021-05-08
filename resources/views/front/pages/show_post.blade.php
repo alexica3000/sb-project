@@ -11,6 +11,7 @@
             <p class="blog-post-meta">{{ $post->created_at }}</p>
             {!! $post->description !!}
             <hr>
+            @include('front.includes.tags', ['tags' => $post->tags])
             <a href="{{ route('home') }}">Home</a>
         </div>
 

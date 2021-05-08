@@ -1,9 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Posts\StorePostRequest;
 use App\Models\Post;
+use App\Models\Tag;
+use Illuminate\Support\Collection;
 
 class PostController extends Controller
 {
@@ -37,12 +40,23 @@ class PostController extends Controller
         $fields = $request->except('is_published');
         $post->update($fields + ['is_published' => $request->has('is_published')]);
 
-        return redirect()->route('posts.index')->with(['status' => 'Post has been updated.']);
-    }
+        /** @var Collection $postTags */
+        $postTags = $post->tags->keyBy('name');
+        $tags = collect(explode(',', $request->input('tags')))->keyBy(fn($item) => $item);
 
-    public function show(Post $post)
-    {
-        return view('pages.show_post', compact('post'));
+        $tagsToAttach = $tags->diffKeys($postTags);
+        $tagsToDetach = $postTags->diffkeys($tags);
+
+        foreach($tagsToAttach as $tag) {
+            $tag = Tag::firstOrCreate(['name' => $tag]);
+            $post->tags()->attach($tag);
+        }
+
+        foreach($tagsToDetach as $tag) {
+            $post->tags()->detach($tag);
+        }
+
+        return redirect()->route('posts.index')->with(['status' => 'Post has been updated.']);
     }
 
     public function destroy(Post $post)

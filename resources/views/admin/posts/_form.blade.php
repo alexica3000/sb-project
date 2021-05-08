@@ -16,7 +16,18 @@
 
 <div class="form-group">
     <label for="description">Description</label>
-    <textarea class="form-control" rows="7" name="description" id="description">{{ old('description', $post->description) }}</textarea>
+    <textarea class="form-control" rows="4" name="description" id="description">{{ old('description', $post->description) }}</textarea>
+</div>
+
+<div class="form-group">
+    <label for="input_tags">Tags</label>
+    <input
+        type="text"
+        class="form-control"
+        name="tags"
+        id="input_tags"
+        value="{{ old('tags', $post->tags->pluck('name')->implode(',')) }}"
+    />
 </div>
 
 <div class="form-group form-check">
