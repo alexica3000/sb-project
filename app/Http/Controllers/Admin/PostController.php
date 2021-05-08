@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Posts\StorePostRequest;
+use App\Http\Services\TagsSynchronizer;
 use App\Models\Post;
-use App\Models\Tag;
-use Illuminate\Support\Collection;
 
 class PostController extends Controller
 {
@@ -22,10 +21,11 @@ class PostController extends Controller
         return view('admin.posts.create');
     }
 
-    public function store(StorePostRequest $request)
+    public function store(StorePostRequest $request, TagsSynchronizer $synchronizer)
     {
         $fields = $request->except('is_published');
-        Post::create($fields + ['is_published' => $request->has('is_published')]);
+        $post = Post::create($fields + ['is_published' => $request->has('is_published')]);
+        $synchronizer->sync(collect(explode(',', $request->input('tags'))), $post);
 
         return redirect()->route('posts.index')->with(['status' => 'Post has been added.']);
     }
@@ -35,23 +35,11 @@ class PostController extends Controller
         return view('admin.posts.edit', compact('post'));
     }
 
-    public function update(StorePostRequest $request, Post $post)
+    public function update(StorePostRequest $request, Post $post, TagsSynchronizer $synchronizer)
     {
         $fields = $request->except('is_published');
         $post->update($fields + ['is_published' => $request->has('is_published')]);
-
-        /** @var Collection $postTags */
-        $postTags = $post->tags->keyBy('name');
-        $tags = collect(explode(',', $request->input('tags')))->keyBy(fn($item) => $item);
-        $syncIds = $postTags->intersectByKeys($tags)->pluck('id')->toArray();
-        $tagsToAttach = $tags->diffKeys($postTags);
-
-        foreach($tagsToAttach as $tag) {
-            $tag = Tag::firstOrCreate(['name' => $tag]);
-            $syncIds[] = $tag->id;
-        }
-
-        $post->tags()->sync($syncIds);
+        $synchronizer->sync(collect(explode(',', $request->input('tags'))), $post);
 
         return redirect()->route('posts.index')->with(['status' => 'Post has been updated.']);
     }
