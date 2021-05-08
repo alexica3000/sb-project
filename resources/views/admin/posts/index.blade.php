@@ -18,7 +18,7 @@
                                     <span>Title</span>
                                 </th>
                                 <th class="px-16 py-2">
-                                    <span>Description</span>
+                                    <span>Tags</span>
                                 </th>
                                 <th class="px-16 py-2">
                                     <span>Published</span>
@@ -39,7 +39,11 @@
                                             <span class="text-center ml-2 font-semibold">{{ $post->title }}</span>
                                         </td>
                                         <td class="py-1">
-                                            {{ $post->short }}
+                                            @if($post->tags->isNotEmpty())
+                                                @foreach($post->tags as $tag)
+                                                    <span class="inline-flex items-center justify-center px-2 py-1 mr-1 text-xs font-bold leading-none text-white bg-green-600 rounded-full">{{ $tag->name }}</span>
+                                                @endforeach
+                                            @endif
                                         </td>
                                         <td class="py-1">
                                             <span>{{ $post->is_published ? 'yes' : ''  }}</span>
