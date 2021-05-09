@@ -11,7 +11,7 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::orderBy('id', 'desc')->get();
+        $posts = auth()->user()->posts()->orderBy('id', 'desc')->get();
 
         return view('admin.posts.index', compact('posts'));
     }
@@ -24,7 +24,7 @@ class PostController extends Controller
     public function store(StorePostRequest $request, TagsSynchronizer $synchronizer)
     {
         $fields = $request->except('is_published');
-        $post = Post::create($fields + ['is_published' => $request->has('is_published')]);
+        $post = auth()->user()->posts()->create($fields + ['is_published' => $request->has('is_published')]);
         $synchronizer->sync(collect(explode(',', $request->input('tags'))), $post);
 
         return redirect()->route('posts.index')->with(['status' => 'Post has been added.']);
@@ -32,11 +32,14 @@ class PostController extends Controller
 
     public function edit(Post $post)
     {
+        $this->authorize('update', $post);
+
         return view('admin.posts.edit', compact('post'));
     }
 
     public function update(StorePostRequest $request, Post $post, TagsSynchronizer $synchronizer)
     {
+        $this->authorize('update', $post);
         $fields = $request->except('is_published');
         $post->update($fields + ['is_published' => $request->has('is_published')]);
         $synchronizer->sync(collect(explode(',', $request->input('tags'))), $post);
@@ -46,6 +49,7 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
+        $this->authorize('delete', $post);
         $post->delete();
 
         return redirect()->route('posts.index')->with(['status' => 'The post has been deleted.']);

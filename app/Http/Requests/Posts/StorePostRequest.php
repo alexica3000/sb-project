@@ -29,7 +29,7 @@ class StorePostRequest extends FormRequest
             'title'        => 'required|min:5|max:100',
             'alias'        => 'required|string|unique:posts,alias,' . (!empty($this->post) ? $this->post->id : ''),
             'short'        => 'required|string|max:255',
-            'description'  => 'required',
+            'body'         => 'required',
             'is_published' => 'sometimes|accepted'
         ];
     }

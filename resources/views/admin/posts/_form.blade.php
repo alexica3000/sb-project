@@ -10,13 +10,13 @@
 </div>
 
 <div class="form-group">
-    <label for="short">Short Description</label>
+    <label for="short">Short</label>
     <textarea class="form-control" rows="3" name="short" id="short">{{ old('short', $post->short) }}</textarea>
 </div>
 
 <div class="form-group">
-    <label for="description">Description</label>
-    <textarea class="form-control" rows="4" name="description" id="description">{{ old('description', $post->description) }}</textarea>
+    <label for="body">Body</label>
+    <textarea class="form-control" rows="4" name="body" id="body">{{ old('description', $post->body) }}</textarea>
 </div>
 
 <div class="form-group">
