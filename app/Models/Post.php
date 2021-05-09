@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Events\PostCreated;
+use App\Events\PostAffectedEvent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,7 +13,7 @@ class Post extends Model
     protected $fillable = ['title', 'alias', 'short', 'body', 'is_published'];
 
     protected $dispatchesEvents = [
-        'created' => PostCreated::class,
+        'created' => PostAffectedEvent::class,
     ];
 
     public function tags()

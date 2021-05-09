@@ -11,28 +11,20 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class PostCreated
+class PostAffectedEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public Post $post;
-    /**
-     * Create a new event instance.
-     *
-     * @return void
-     */
-    public function __construct(Post $post)
-    {
-        $this->post = $post;
-    }
+    const TYPE_CREATED = 'created';
+    const TYPE_UPDATED = 'updated';
+    const TYPE_DELETED = 'deleted';
 
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return \Illuminate\Broadcasting\Channel|array
-     */
-    public function broadcastOn()
+    public string $type;
+    public Post $post;
+
+    public function __construct(string $type, Post $post)
     {
-        return new PrivateChannel('channel-name');
+        $this->type = $type;
+        $this->post = $post;
     }
 }
