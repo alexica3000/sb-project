@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\PostCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Posts\StorePostRequest;
 use App\Http\Services\TagsSynchronizer;
 use App\Models\Post;
+use Illuminate\Support\Facades\Mail;
 
 class PostController extends Controller
 {
