@@ -11,20 +11,14 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class PostAffectedEvent
+class PostDeletedEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    const TYPE_CREATED = 'created';
-    const TYPE_UPDATED = 'updated';
-    const TYPE_DELETED = 'deleted';
-
-    public string $type;
     public Post $post;
 
-    public function __construct(string $type, Post $post)
+    public function __construct(Post $post)
     {
-        $this->type = $type;
         $this->post = $post;
     }
 }

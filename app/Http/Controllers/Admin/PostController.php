@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Events\PostAffectedEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Posts\StorePostRequest;
 use App\Http\Services\TagsSynchronizer;
@@ -28,8 +27,6 @@ class PostController extends Controller
         $post = auth()->user()->posts()->create($fields + ['is_published' => $request->has('is_published')]);
         $synchronizer->sync(collect(explode(',', $request->input('tags'))), $post);
 
-        event(new PostAffectedEvent(PostAffectedEvent::TYPE_CREATED, $post));
-
         return redirect()->route('posts.index')->with(['status' => 'Post has been added.']);
     }
 
@@ -47,8 +44,6 @@ class PostController extends Controller
         $post->update($fields + ['is_published' => $request->has('is_published')]);
         $synchronizer->sync(collect(explode(',', $request->input('tags'))), $post);
 
-        event(new PostAffectedEvent(PostAffectedEvent::TYPE_UPDATED, $post));
-
         return redirect()->route('posts.index')->with(['status' => 'Post has been updated.']);
     }
 
@@ -56,8 +51,6 @@ class PostController extends Controller
     {
         $this->authorize('delete', $post);
         $post->delete();
-
-        event(new PostAffectedEvent(PostAffectedEvent::TYPE_DELETED, $post));
 
         return redirect()->route('posts.index')->with(['status' => 'The post has been deleted.']);
     }

@@ -2,8 +2,6 @@
 
 namespace App\Http\Services;
 
-use App\Mail\PostCreated;
-use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Mail\Mailable;
@@ -21,7 +19,12 @@ class MailService
 
     public function sendPost(Mailable $mailable)
     {
-        Mail::to($this->email)
-            ->send($mailable);
+        try {
+            Mail::to($this->email)
+                ->send($mailable);
+        } catch (\Exception $e) {
+            logger()->error($e->getMessage());
+        }
+
     }
 }
