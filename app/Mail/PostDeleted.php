@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class PostCreated extends Mailable
+class PostDeleted extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -21,6 +21,6 @@ class PostCreated extends Mailable
 
     public function build()
     {
-        return $this->markdown('mail.posts.created');
+        return $this->markdown('mail.posts.deleted');
     }
 }
