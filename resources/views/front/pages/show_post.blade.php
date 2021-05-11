@@ -9,7 +9,7 @@
         <div class="blog-post">
             <h2 class="blog-post-title">{{ $post->title }}</h2>
             <p class="blog-post-meta">{{ $post->created_at }}</p>
-            {!! $post->description !!}
+            {!! $post->body !!}
             <hr>
             @include('front.includes.tags', ['tags' => $post->tags])
             <a href="{{ route('home') }}">Home</a>
