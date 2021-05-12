@@ -13,7 +13,7 @@ class PageController extends Controller
 {
     public function home()
     {
-        $posts = Post::with(['tags'])->orderBy('created_at', 'desc')->paginate(4);
+        $posts = Post::where('is_published', 1)->with(['tags'])->orderBy('created_at', 'desc')->paginate(4);
 
         return view('front.pages.home', compact('posts'));
     }
@@ -30,6 +30,8 @@ class PageController extends Controller
 
     public function showPost(Post $post)
     {
+        abort_unless($post->isPublished || auth()->id() == $post->user_id || auth()->user()->isAdmin(), 403);
+
         return view('front.pages.show_post', compact('post'));
     }
 
