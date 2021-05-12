@@ -22,7 +22,9 @@
                         My Posts
                     </x-nav-link>
                     @admin()
-                        test
+                        <x-nav-link :href="route('posts.all')" :active="request()->routeIs('posts.all')">
+                            All Posts
+                        </x-nav-link>
                     @endadmin
                 </div>
             </div>

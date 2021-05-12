@@ -54,4 +54,11 @@ class PostController extends Controller
 
         return redirect()->route('posts.index')->with(['status' => 'The post has been deleted.']);
     }
+
+    public function allPosts()
+    {
+        $posts = Post::all()->sortByDesc('id');
+
+        return view('admin.posts.index', compact('posts'));
+    }
 }
