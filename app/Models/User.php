@@ -45,4 +45,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Post::class);
     }
+
+    public function role()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function isAdmin()
+    {
+        return $this->role->contains(fn($role) => $role->name == 'Administrator');
+    }
 }

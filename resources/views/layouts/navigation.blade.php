@@ -21,6 +21,9 @@
                     <x-nav-link :href="route('posts.index')" :active="request()->routeIs('posts.index')">
                         My Posts
                     </x-nav-link>
+                    @admin()
+                        test
+                    @endadmin
                 </div>
             </div>
 
