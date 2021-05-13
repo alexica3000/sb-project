@@ -15,9 +15,12 @@ Route::post('/contacts', [PageController::class, 'storeMessage'])->name('store_m
 
 Route::prefix('/dashboard')->middleware(['auth'])->group(function() {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/messages', [MessageController::class, 'index'])->name('messages');
     Route::resource('/posts', PostController::class);
-    Route::get('/all-posts', [PostController::class, 'allPosts'])->middleware('isAdmin')->name('posts.all');
+
+    Route::middleware('isAdmin')->group(function() {
+        Route::get('/messages', [MessageController::class, 'index'])->name('messages');
+        Route::get('/all-posts', [PostController::class, 'allPosts'])->name('posts.all');
+    });
 });
 
 require __DIR__.'/auth.php';

@@ -30,7 +30,7 @@ class PageController extends Controller
 
     public function showPost(Post $post)
     {
-        abort_unless($post->isPublished || auth()->id() == $post->user_id || auth()->user()->isAdmin(), 403);
+        abort_unless($post->is_published || auth()->id() == $post->user_id || (auth()->check() && auth()->user()->isAdmin()), 403);
 
         return view('front.pages.show_post', compact('post'));
     }

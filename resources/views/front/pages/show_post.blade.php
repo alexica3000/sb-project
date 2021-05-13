@@ -2,9 +2,11 @@
 
 @section('content')
     <div class="col-md-8 blog-main">
-        <h3 class="pb-4 mb-4 font-italic border-bottom">
-            {{ $post->title }}
-        </h3>
+        <h5 class="pb-4 mb-4">
+            @auth()
+                <a href="{{ route('posts.edit', $post) }}" class="btn btn-outline-info">Edit Post</a>
+            @endauth
+        </h5>
 
         <div class="blog-post">
             <h2 class="blog-post-title">{{ $post->title }}</h2>

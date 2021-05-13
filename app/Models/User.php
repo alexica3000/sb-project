@@ -46,13 +46,13 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
-    public function role()
+    public function roles()
     {
         return $this->belongsToMany(Role::class);
     }
 
-    public function isAdmin()
+    public function isAdmin() : bool
     {
-        return $this->role->contains(fn($role) => $role->name == 'Administrator');
+        return $this->roles->contains(fn($role) => $role->name == 'Administrator');
     }
 }
