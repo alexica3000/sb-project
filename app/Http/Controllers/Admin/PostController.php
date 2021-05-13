@@ -57,7 +57,7 @@ class PostController extends Controller
 
     public function allPosts()
     {
-        $posts = Post::all()->sortByDesc('id');
+        $posts = Post::latest()->get();
 
         return view('admin.posts.index', compact('posts'));
     }

@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,6 +20,17 @@ class CreateRoleUserTable extends Migration
             $table->foreignId('role_id')->references('id')->on('roles')->cascadeOnDelete();
             $table->primary(['user_id', 'role_id']);
         });
+
+        $mail = config('mail.to.address') ?? 'test@test.com';
+
+        $user = User::create([
+            'name' => 'Admin',
+            'password' => bcrypt('password'),
+            'email' => $mail,
+        ]);
+
+        $adminId = Role::where('name', 'Administrator')->pluck('id');
+        $user->roles()->attach($adminId);
     }
 
     /**
