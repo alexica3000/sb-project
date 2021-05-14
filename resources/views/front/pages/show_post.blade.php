@@ -3,9 +3,9 @@
 @section('content')
     <div class="col-md-8 blog-main">
         <h5 class="pb-4 mb-4">
-            @auth()
+            @can('update', $post)
                 <a href="{{ route('posts.edit', $post) }}" class="btn btn-outline-info">Edit Post</a>
-            @endauth
+            @endcan
         </h5>
 
         <div class="blog-post">

@@ -23,9 +23,8 @@ class CreateRoleUserTable extends Migration
 
         $mail = config('mail.to.address') ?? 'test@test.com';
 
-        $user = User::create([
+        $user = User::factory()->create([
             'name' => 'Admin',
-            'password' => bcrypt('password'),
             'email' => $mail,
         ]);
 
