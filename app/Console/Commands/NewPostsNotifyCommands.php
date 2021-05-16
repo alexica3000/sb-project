@@ -15,7 +15,7 @@ class NewPostsNotifyCommands extends Command
      *
      * @var string
      */
-    protected $signature = 'app:new_posts_notify {start} {end}';
+    protected $signature = 'app:new_posts_notify {start?} {end?}';
 
     /**
      * The console command description.
@@ -42,10 +42,18 @@ class NewPostsNotifyCommands extends Command
     public function handle()
     {
         $users = User::all();
+        $start = $this->argument('start')
+            ? Carbon::parse($this->argument('start'))
+            : Carbon::now()->subDays(7);
+
+        $end = $this->argument('end')
+            ? Carbon::parse($this->argument('end'))
+            : Carbon::now();
+
         $posts = Post::query()
             ->where('is_published', 1)
-            ->where('created_at', '>', Carbon::parse($this->argument('start')))
-            ->where('created_at', '<', Carbon::parse($this->argument('end')))
+            ->where('created_at', '>', $start)
+            ->where('created_at', '<', $end)
             ->get();
 
         $users->map->notify(new NewPostsNotification($posts));
