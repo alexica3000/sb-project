@@ -52,7 +52,7 @@ class NewPostsNotifyCommands extends Command
 
         $posts = Post::query()
             ->where('is_published', 1)
-            ->where('created_at', '>', $start)
+            ->where('created_at', '>=', $start)
             ->where('created_at', '<', $end)
             ->get();
 

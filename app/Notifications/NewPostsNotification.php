@@ -26,7 +26,7 @@ class NewPostsNotification extends Notification
 
     public function toMail($notifiable)
     {
-        return (new MailMessage)
+        return (new MailMessage())
             ->subject('New Posts')
             ->markdown('mail.posts.new-posts', ['posts' => $this->posts, 'user' => $notifiable]);
     }

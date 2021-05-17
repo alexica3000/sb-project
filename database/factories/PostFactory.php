@@ -28,7 +28,7 @@ class PostFactory extends Factory
             'short'        => $this->faker->text(),
             'body'         => $this->faker->paragraphs(rand(1, 3), true),
             'is_published' => $this->faker->boolean(),
-            'user_id'      => rand(1, User::query()->count()),
+            'user_id'      => User::factory(),
         ];
     }
 }
