@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Front\PageController;
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\PushServiceController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PageController::class, 'home'])->name('home');
@@ -25,6 +26,5 @@ Route::prefix('/dashboard')->middleware(['auth'])->group(function() {
 
 require __DIR__.'/auth.php';
 
-Route::get('/test', function(\App\Http\Services\Pushall $pushall) {
-    dd($pushall);
-});
+Route::get('/service', [PushServiceController::class, 'form']);
+Route::post('/service', [PushServiceController::class, 'send']);
