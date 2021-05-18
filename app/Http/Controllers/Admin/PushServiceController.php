@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Notifications\SendPushallRequest;
 use App\Http\Services\Pushall;
-use Illuminate\Http\Request;
 
 class PushServiceController extends Controller
 {
@@ -12,14 +13,9 @@ class PushServiceController extends Controller
         return view('admin.pushall.form');
     }
 
-    public function send(Pushall $pushall)
+    public function send(SendPushallRequest $request, Pushall $pushall)
     {
-        $data = \request()->validate([
-            'title' => 'required|max:80',
-            'text' => 'required|max:500'
-        ]);
-
-        $pushall->send($data['title'], $data['text']);
+        $pushall->send($request->input('title'), $request->input('text'));
 
         return redirect()->route('pushall.form')->with(['status' => 'Notification has been send successfully.']);
     }
