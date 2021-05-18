@@ -21,10 +21,11 @@ Route::prefix('/dashboard')->middleware(['auth'])->group(function() {
     Route::middleware('isAdmin')->group(function() {
         Route::get('/messages', [MessageController::class, 'index'])->name('messages');
         Route::get('/all-posts', [PostController::class, 'allPosts'])->name('posts.all');
+
+        Route::get('/pushall-form', [PushServiceController::class, 'form'])->name('pushall.form');
+        Route::post('/pushall-send', [PushServiceController::class, 'send'])->name('pushall.send');
     });
 });
 
 require __DIR__.'/auth.php';
 
-Route::get('/service', [PushServiceController::class, 'form']);
-Route::post('/service', [PushServiceController::class, 'send']);
