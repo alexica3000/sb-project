@@ -25,6 +25,9 @@
                         <x-nav-link :href="route('posts.all')" :active="request()->routeIs('posts.all')">
                             All Posts
                         </x-nav-link>
+                        <x-nav-link :href="route('pushall.form')" :active="request()->routeIs('pushall.form')">
+                            Send Notification
+                        </x-nav-link>
                     @endadmin
                 </div>
             </div>
