@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\Front\PageController;
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\PostController;
@@ -16,6 +17,7 @@ Route::post('/contacts', [PageController::class, 'storeMessage'])->name('store_m
 
 Route::prefix('/dashboard')->middleware(['auth'])->group(function() {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::post('/comments/{post}', [CommentController::class, 'store'])->name('comments.store');
     Route::resource('/posts', PostController::class);
 
     Route::middleware('isAdmin')->group(function() {

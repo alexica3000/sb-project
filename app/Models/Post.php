@@ -49,4 +49,9 @@ class Post extends Model
     {
         return $this->belongsToMany(User::class, 'post_histories')->withPivot(['before', 'after', ])->withTimestamps();
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class)->whereNull('p_id');
+    }
 }
