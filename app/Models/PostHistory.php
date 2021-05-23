@@ -4,12 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class PostHistory extends Model
+class PostHistory extends Pivot
 {
     use HasFactory;
 
-    protected $fillable = ['changes'];
+    protected $fillable = ['before', 'after'];
+
+    protected $casts = [
+        'before' => 'array',
+        'after'  => 'array',
+    ];
 
     public function user()
     {

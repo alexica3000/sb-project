@@ -29,8 +29,8 @@ class Post extends Model
         static::updating(function(Post $post) {
             $after = $post->getDirty();
             $post->history()->attach(auth()->id(), [
-                'before' => Json::encode(Arr::only($post->fresh()->toArray(), array_keys($after))),
-                'after'  => Json::encode($after),
+                'before' => Arr::only($post->fresh()->toArray(), array_keys($after)),
+                'after'  => $after,
             ]);
         });
     }
@@ -47,7 +47,7 @@ class Post extends Model
 
     public function history()
     {
-        return $this->belongsToMany(User::class, 'post_histories')->withPivot(['before', 'after', ])->withTimestamps();
+        return $this->belongsToMany(User::class, 'post_histories')->withPivot(['before', 'after', ])->withTimestamps()->using(PostHistory::class);
     }
 
     public function comments()
