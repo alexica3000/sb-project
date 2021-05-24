@@ -15,6 +15,8 @@
             <hr>
             @include('front.includes.tags', ['tags' => $post->tags])
             <a href="{{ route('home') }}">Home</a>
+
+            @include('front.includes.comments', ['comments' => $post->comments, 'post' => $post])
         </div>
 
     </div>

@@ -14,6 +14,8 @@
                         @method('put')
                         @include('admin.posts._form', ['post' => $post])
                     </form>
+
+                    @include('admin.posts._history', ['post' => $post])
                 </div>
             </div>
         </div>

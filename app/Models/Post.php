@@ -7,6 +7,8 @@ use App\Events\PostDeletedEvent;
 use App\Events\PostUpdatedEvent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
+use Psy\Util\Json;
 
 class Post extends Model
 {
@@ -20,6 +22,19 @@ class Post extends Model
         'deleted' => PostDeletedEvent::class,
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::updating(function(Post $post) {
+            $after = $post->getDirty();
+            $post->history()->attach(auth()->id(), [
+                'before' => Arr::only($post->fresh()->toArray(), array_keys($after)),
+                'after'  => $after,
+            ]);
+        });
+    }
+
     public function tags()
     {
         return $this->belongsToMany(Tag::class, 'post_tag');
@@ -28,5 +43,15 @@ class Post extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function history()
+    {
+        return $this->belongsToMany(User::class, 'post_histories')->withPivot(['before', 'after', ])->withTimestamps()->using(PostHistory::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class)->whereNull('p_id');
     }
 }
