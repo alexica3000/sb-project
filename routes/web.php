@@ -15,6 +15,7 @@ Route::get('/contacts', [PageController::class, 'contacts'])->name('contacts');
 Route::get('/posts/show/{post}', [PageController::class, 'showPost'])->name('post_show_front');
 Route::get('/posts/tags/{tag}', [PageController::class, 'tag'])->name('posts.tag');
 Route::post('/contacts', [PageController::class, 'storeMessage'])->name('store_message');
+Route::get('news', [PageController::class, 'news'])->name('news');
 
 Route::prefix('/dashboard')->middleware(['auth'])->group(function() {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');

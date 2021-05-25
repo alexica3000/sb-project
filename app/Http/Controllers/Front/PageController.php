@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreMessageRequest;
 use App\Models\Message;
+use App\Models\News;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
@@ -47,5 +48,10 @@ class PageController extends Controller
         $posts = $tag->posts()->with('tags')->paginate(4);
 
         return view('front.pages.home', compact('posts'));
+    }
+
+    public function news()
+    {
+        $news = News::query()->latest()->paginate();
     }
 }
