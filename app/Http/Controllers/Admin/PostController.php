@@ -11,7 +11,7 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = auth()->user()->posts()->orderBy('id', 'desc')->get();
+        $posts = auth()->user()->posts()->orderBy('id', 'desc')->paginate(20);
 
         return view('admin.posts.index', compact('posts'));
     }
@@ -57,7 +57,7 @@ class PostController extends Controller
 
     public function allPosts()
     {
-        $posts = Post::latest()->get();
+        $posts = Post::latest()->paginate(20);
 
         return view('admin.posts.index', compact('posts'));
     }

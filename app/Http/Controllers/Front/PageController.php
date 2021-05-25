@@ -14,7 +14,7 @@ class PageController extends Controller
 {
     public function home()
     {
-        $posts = Post::where('is_published', 1)->with(['tags'])->orderBy('created_at', 'desc')->paginate(4);
+        $posts = Post::where('is_published', 1)->with(['tags'])->orderBy('created_at', 'desc')->paginate(10);
 
         return view('front.pages.home', compact('posts'));
     }
@@ -52,6 +52,15 @@ class PageController extends Controller
 
     public function news()
     {
-        $news = News::query()->latest()->paginate();
+        $news = News::query()->isActive()->latest()->paginate(10);
+
+        return view('front.pages.news', compact('news'));
+    }
+
+    public function showNews(News $news)
+    {
+        $this->authorize('showNews', $news);
+
+        return view('front.pages.show_news', compact('news'));
     }
 }

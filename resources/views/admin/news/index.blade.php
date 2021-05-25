@@ -60,10 +60,12 @@
                                     <td colspan="5" class="py-1">No news</td>
                                 </tr>
                             @endforelse
-
                         </tbody>
                     </table>
 
+                    <div class="mt-3">
+                        {{ $news->links() }}
+                    </div>
                 </div>
             </div>
         </div>
