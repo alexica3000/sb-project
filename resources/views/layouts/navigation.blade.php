@@ -28,6 +28,9 @@
                         <x-nav-link :href="route('pushall.form')" :active="request()->routeIs('pushall.form')">
                             Send Notification
                         </x-nav-link>
+                        <x-nav-link :href="route('news.index')" :active="request()->routeIs('news.index')">
+                            News
+                        </x-nav-link>
                     @endadmin
                 </div>
             </div>
