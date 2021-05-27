@@ -52,6 +52,6 @@ class Post extends Model
 
     public function comments()
     {
-        return $this->hasMany(Comment::class)->whereNull('p_id');
+        return $this->morphToMany(Comment::class, 'commentable');
     }
 }

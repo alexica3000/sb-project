@@ -20,4 +20,9 @@ class News extends Model
     {
         return $query->where('is_published', 1);
     }
+
+    public function comments()
+    {
+        return $this->morphToMany(Comment::class, 'commentable');
+    }
 }
