@@ -55,4 +55,9 @@ class User extends Authenticatable
     {
         return $this->roles->contains(fn($role) => $role->name == 'Administrator');
     }
+
+    public function news()
+    {
+        return $this->hasMany(News::class);
+    }
 }

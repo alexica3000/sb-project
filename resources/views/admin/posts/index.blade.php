@@ -71,6 +71,9 @@
                         </tbody>
                     </table>
 
+                    <div class="mt-3">
+                        {{ $posts->links() }}
+                    </div>
                 </div>
             </div>
         </div>
