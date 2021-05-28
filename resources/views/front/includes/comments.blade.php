@@ -2,7 +2,7 @@
 <hr>
 
 @auth
-    <form method="post" action="{{ route('comments.store', $post) }}">
+    <form method="post" action="{{ $route }}">
         @csrf
         <div class="form-group">
             <textarea name="body" id="body" rows="4" style="width: 100%" class="form-control border rounded"></textarea>
