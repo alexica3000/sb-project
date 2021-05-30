@@ -13,7 +13,12 @@ class Tag extends Model
 
     public function posts()
     {
-        return $this->belongsToMany(Post::class, 'post_tag');
+        return $this->morphedByMany(Post::class, 'taggable');
+    }
+
+    public function news()
+    {
+        return $this->morphedByMany(News::class, 'taggable');
     }
 
     public function getRouteKeyName()

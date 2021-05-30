@@ -12,6 +12,7 @@
                 <p class="blog-post-meta">{{ $item->created_at }}</p>
                 {!! $item->short !!}
                 <hr>
+                @include('front.includes.tags', ['tags' => $item->tags])
             </div>
         @empty
             <div>No news</div>

@@ -20,7 +20,8 @@ Route::get('news/show/{news}', [PageController::class, 'showNews'])->name('news_
 
 Route::prefix('/dashboard')->middleware(['auth'])->group(function() {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-    Route::post('/comments/{post}', [CommentController::class, 'store'])->name('comments.store');
+    Route::post('/comments-post/{post}', [CommentController::class, 'storeForPost'])->name('comments.store.post');
+    Route::post('/comments-news/{news}', [CommentController::class, 'storeForNews'])->name('comments.store.news');
     Route::resource('/posts', PostController::class);
 
     Route::middleware('isAdmin')->group(function() {

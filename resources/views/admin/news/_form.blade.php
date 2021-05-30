@@ -14,6 +14,17 @@
     <textarea class="form-control" rows="4" name="body" id="body">{{ old('description', $news->body) }}</textarea>
 </div>
 
+<div class="form-group">
+    <label for="input_tags">Tags</label>
+    <input
+        type="text"
+        class="form-control"
+        name="tags"
+        id="input_tags"
+        value="{{ old('tags', $news->tags->pluck('name')->implode(',')) }}"
+    />
+</div>
+
 <div class="form-group form-check">
     <input
         type="checkbox"
