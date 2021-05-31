@@ -3,5 +3,6 @@
         <a class="p-2 text-muted" href="{{ route('about') }}">About</a>
         <a class="p-2 text-muted" href="{{ route('contacts') }}">Contacts</a>
         <a class="p-2 text-muted" href="{{ route('news') }}">News</a>
+        <a class="p-2 text-muted" href="{{ route('statistics') }}">Statistics</a>
     </nav>
 </div>

@@ -17,9 +17,9 @@ class Post extends Model
     protected $fillable = ['title', 'alias', 'short', 'body', 'is_published'];
 
     protected $dispatchesEvents = [
-        'created' => PostCreatedEvent::class,
-        'updated' => PostUpdatedEvent::class,
-        'deleted' => PostDeletedEvent::class,
+//        'created' => PostCreatedEvent::class,
+//        'updated' => PostUpdatedEvent::class,
+//        'deleted' => PostDeletedEvent::class,
     ];
 
     protected static function boot()

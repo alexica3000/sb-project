@@ -28,6 +28,6 @@ class Tag extends Model
 
     public static function tagsCloud()
     {
-        return (new static)::has('posts')->get();
+        return (new static)::query()->whereHas('posts')->orWhereHas('news')->get();
     }
 }

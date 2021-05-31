@@ -45,9 +45,10 @@ class PageController extends Controller
 
     public function tag(Tag $tag)
     {
-        $posts = $tag->posts()->with('tags')->paginate(4);
+        $posts = $tag->posts()->with('tags')->get();
+        $news = $tag->news()->with('tags')->get();
 
-        return view('front.pages.home', compact('posts'));
+        return view('front.pages.by_tags', compact('tag', 'posts', 'news'));
     }
 
     public function news()
@@ -62,5 +63,10 @@ class PageController extends Controller
         $this->authorize('showNews', $news);
 
         return view('front.pages.show_news', compact('news'));
+    }
+
+    public function statistics()
+    {
+
     }
 }

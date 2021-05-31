@@ -17,6 +17,7 @@ Route::get('/posts/tags/{tag}', [PageController::class, 'tag'])->name('posts.tag
 Route::post('/contacts', [PageController::class, 'storeMessage'])->name('store_message');
 Route::get('news', [PageController::class, 'news'])->name('news');
 Route::get('news/show/{news}', [PageController::class, 'showNews'])->name('news_show_front');
+Route::get('statistics', [PageController::class, 'statistics'])->name('statistics');
 
 Route::prefix('/dashboard')->middleware(['auth'])->group(function() {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
