@@ -8,6 +8,7 @@ use App\Models\Message;
 use App\Models\News;
 use App\Models\Post;
 use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -67,6 +68,15 @@ class PageController extends Controller
 
     public function statistics()
     {
+        $totalPosts = Post::query()->where('is_published', 1)->sum('id');
+        $totalNews = News::query()->isActive()->sum('id');
+        $userMostPosts = User::query()->withCount('posts')->orderBy('posts_count', 'desc')->first();
+        $longestPost = Post::query()->where('is_published', 1)->orderByRaw('CHAR_LENGTH(body) DESC')->first();
+        $shortestPost = Post::query()->where('is_published', 1)->orderByRaw('CHAR_LENGTH(body) ASC')->first();
+        $avgPosts = User::query()->has('posts', '>=', 1)->withCount('posts')->get()->average('posts_count');
+        $postVolatile = Post::query()->withCount('history')->orderBy('history_count', 'desc')->first();
+        $postMostDiscussed = Post::query()->withCount('comments')->orderBy('comments_count', 'desc')->first();
 
+        return view('front.pages.statistics', compact('totalPosts', 'totalNews', 'userMostPosts', 'longestPost', 'shortestPost', 'avgPosts', 'postMostDiscussed', 'postVolatile'));
     }
 }
