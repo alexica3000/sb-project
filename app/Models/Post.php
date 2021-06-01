@@ -5,12 +5,13 @@ namespace App\Models;
 use App\Events\PostCreatedEvent;
 use App\Events\PostDeletedEvent;
 use App\Events\PostUpdatedEvent;
+use App\Models\Interfaces\CommentsInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Psy\Util\Json;
 
-class Post extends Model
+class Post extends Model implements CommentsInterface
 {
     use HasFactory;
 

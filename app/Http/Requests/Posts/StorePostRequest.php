@@ -41,9 +41,4 @@ class StorePostRequest extends FormRequest
             'alias' => Str::slug($this->alias),
         ]);
     }
-
-    public function tagsCollection() : Collection
-    {
-        return collect(explode(',', $this->input('tags')));
-    }
 }

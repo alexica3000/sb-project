@@ -3,12 +3,12 @@
 namespace App\Http\Services;
 
 use App\Http\Requests\Comments\StoreCommentsRequest;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Interfaces\CommentsInterface;
 
 class CommentsService
 {
-    public function store(StoreCommentsRequest $request, Model $model)
+    public function store(StoreCommentsRequest $request, CommentsInterface $resource)
     {
-        $model->comments()->create($request->validated() + ['user_id' => auth()->id()]);
+        $resource->comments()->create($request->validated() + ['user_id' => auth()->id()]);
     }
 }
