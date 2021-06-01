@@ -26,7 +26,7 @@ class NewsController extends Controller
     {
         $fields = $request->except('is_published');
         $news = auth()->user()->news()->create($fields + ['is_published' => $request->has('is_published')]);
-        $synchronizer->sync(collect(explode(',', $request->input('tags'))), $news);
+        $synchronizer->sync($request->tagsCollection(), $news);
 
         return redirect()->route('news.index')->with(['status' => 'News has been added.']);
     }
@@ -40,7 +40,7 @@ class NewsController extends Controller
     {
         $fields = $request->except('is_published');
         $news->update($fields + ['is_published' => $request->has('is_published')]);
-        $synchronizer->sync(collect(explode(',', $request->input('tags'))), $news);
+        $synchronizer->sync($request->tagsCollection(), $news);
 
         return redirect()->route('news.index')->with(['status' => 'News has been updated.']);
     }

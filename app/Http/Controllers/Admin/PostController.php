@@ -25,7 +25,7 @@ class PostController extends Controller
     {
         $fields = $request->except('is_published');
         $post = auth()->user()->posts()->create($fields + ['is_published' => $request->has('is_published')]);
-        $synchronizer->sync(collect(explode(',', $request->input('tags'))), $post);
+        $synchronizer->sync($request->tagsCollection(), $post);
 
         return redirect()->route('posts.index')->with(['status' => 'Post has been added.']);
     }
@@ -42,7 +42,7 @@ class PostController extends Controller
         $this->authorize('update', $post);
         $fields = $request->except('is_published');
         $post->update($fields + ['is_published' => $request->has('is_published')]);
-        $synchronizer->sync(collect(explode(',', $request->input('tags'))), $post);
+        $synchronizer->sync($request->tagsCollection(), $post);
 
         return redirect()->route('posts.index')->with(['status' => 'Post has been updated.']);
     }

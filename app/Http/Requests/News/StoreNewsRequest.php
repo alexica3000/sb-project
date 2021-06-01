@@ -3,6 +3,7 @@
 namespace App\Http\Requests\News;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Collection;
 
 class StoreNewsRequest extends FormRequest
 {
@@ -19,5 +20,10 @@ class StoreNewsRequest extends FormRequest
             'body'         => 'required|string',
             'is_published' => 'sometimes|accepted'
         ];
+    }
+
+    public function tagsCollection() : Collection
+    {
+        return collect(explode(',', $this->input('tags')));
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Posts;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
@@ -39,5 +40,10 @@ class StorePostRequest extends FormRequest
         $this->merge([
             'alias' => Str::slug($this->alias),
         ]);
+    }
+
+    public function tagsCollection() : Collection
+    {
+        return collect(explode(',', $this->input('tags')));
     }
 }

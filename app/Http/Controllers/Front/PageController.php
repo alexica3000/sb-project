@@ -68,8 +68,8 @@ class PageController extends Controller
 
     public function statistics()
     {
-        $totalPosts = Post::query()->where('is_published', 1)->sum('id');
-        $totalNews = News::query()->isActive()->sum('id');
+        $totalPosts = Post::query()->where('is_published', 1)->count('id');
+        $totalNews = News::query()->isActive()->count('id');
         $userMostPosts = User::query()->withCount('posts')->orderBy('posts_count', 'desc')->first();
         $longestPost = Post::query()->where('is_published', 1)->orderByRaw('CHAR_LENGTH(body) DESC')->first();
         $shortestPost = Post::query()->where('is_published', 1)->orderByRaw('CHAR_LENGTH(body) ASC')->first();
