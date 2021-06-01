@@ -5,12 +5,12 @@ namespace App\Models;
 use App\Events\PostCreatedEvent;
 use App\Events\PostDeletedEvent;
 use App\Events\PostUpdatedEvent;
+use App\Models\Interfaces\HasCommentsInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
-use Psy\Util\Json;
 
-class Post extends Model
+class Post extends Model implements HasCommentsInterface
 {
     use HasFactory;
 
@@ -37,7 +37,7 @@ class Post extends Model
 
     public function tags()
     {
-        return $this->belongsToMany(Tag::class, 'post_tag');
+        return $this->morphToMany(Tag::class, 'taggable');
     }
 
     public function user()
@@ -52,6 +52,6 @@ class Post extends Model
 
     public function comments()
     {
-        return $this->hasMany(Comment::class)->whereNull('p_id');
+        return $this->morphMany(Comment::class, 'commentable');
     }
 }

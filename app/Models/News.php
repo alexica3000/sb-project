@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
+use App\Models\Interfaces\HasCommentsInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class News extends Model
+class News extends Model implements HasCommentsInterface
 {
     use HasFactory;
 
@@ -19,5 +20,15 @@ class News extends Model
     public function scopeIsActive($query)
     {
         return $query->where('is_published', 1);
+    }
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
+    }
+
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
     }
 }

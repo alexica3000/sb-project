@@ -8,6 +8,8 @@
             {!! $news->body !!}
             <hr>
             <a href="{{ route('home') }}">Home</a>
+
+            @include('front.includes.comments', ['comments' => $news->comments, 'route' => route('comments.store.news', $news)])
         </div>
 
     </div>
