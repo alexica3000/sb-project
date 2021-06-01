@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use App\Models\Interfaces\CommentsInterface;
+use App\Models\Interfaces\HasCommentsInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class News extends Model implements CommentsInterface
+class News extends Model implements HasCommentsInterface
 {
     use HasFactory;
 
