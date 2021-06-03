@@ -31,6 +31,9 @@
                         <x-nav-link :href="route('news.index')" :active="request()->routeIs('news.index')">
                             News
                         </x-nav-link>
+                        <x-nav-link :href="route('reports.create')" :active="request()->routeIs('reports.create')">
+                            Reports
+                        </x-nav-link>
                     @endadmin
                 </div>
             </div>
