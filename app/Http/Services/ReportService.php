@@ -8,6 +8,6 @@ class ReportService
 
     public function generate(array $data)
     {
-
+        dd($data);
     }
 }

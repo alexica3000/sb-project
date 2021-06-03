@@ -17,7 +17,7 @@
                         @csrf
 
                         <div class="md:w-2/3">
-                            <select class="form-multiselect block w-full border border-gray-400" size="5" multiple="" name="type_data">
+                            <select class="form-multiselect block w-full border border-gray-400" size="5" multiple="" name="type_data[]">
                                 @foreach($reportService::DATA_TYPES as $type)
                                     <option value="{{ $type }}">{{ $type }}</option>
                                 @endforeach

@@ -16,7 +16,8 @@ class ReportRequest extends FormRequest
     public function rules() : array
     {
         return [
-            'type_data' => ['required', Rule::in(ReportService::DATA_TYPES)],
+            'type_data'   => 'required|array',
+            'type_data.*' => ['required', Rule::in(ReportService::DATA_TYPES)],
         ];
     }
 }
