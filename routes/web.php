@@ -2,12 +2,12 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\NewsController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\Front\PageController;
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\PushServiceController;
-use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PageController::class, 'home'])->name('home');

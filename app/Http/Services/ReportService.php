@@ -2,10 +2,12 @@
 
 namespace App\Http\Services;
 
-use App\Http\Requests\Comments\StoreCommentsRequest;
-use App\Models\Interfaces\CommentsInterface;
-
 class ReportService
 {
+    const DATA_TYPES = ['News', 'Posts', 'Comments', 'Tags', 'Users'];
 
+    public function generate(array $data)
+    {
+
+    }
 }
