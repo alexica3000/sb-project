@@ -7,15 +7,14 @@ use App\Models\News;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\User;
-use Illuminate\Support\Collection;
 
 class ReportService
 {
     const DATA_TYPES = ['News', 'Posts', 'Comments', 'Tags', 'Users'];
 
-    public function generate(array $data) : Collection
+    public function generate(array $data) : array
     {
-        return collect($this->getData($data));
+        return $this->getData($data);
     }
 
     private function getCountData(string $type) : int
@@ -39,7 +38,7 @@ class ReportService
         $arr = [];
 
         foreach ($data as $item) {
-            $arr[$item] = $this->getCountData($item);
+            $arr[] = [$item, $this->getCountData($item)];
         }
 
         return $arr;

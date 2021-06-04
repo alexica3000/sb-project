@@ -2,19 +2,18 @@
 
 namespace App\Exports;
 
-use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\FromArray;
 
-class ReportExport implements FromCollection
+class ReportExport implements FromArray
 {
-    private Collection $data;
+    private array $data;
 
-    public function __construct(Collection $data)
+    public function __construct(array $data)
     {
         $this->data = $data;
     }
 
-    public function collection()
+    public function array(): array
     {
         return $this->data;
     }
