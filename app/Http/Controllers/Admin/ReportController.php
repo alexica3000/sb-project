@@ -17,7 +17,7 @@ class ReportController extends Controller
 
     public function generate(ReportRequest $request, ReportService $service) : RedirectResponse
     {
-        $service->generate($request->validated());
+        $service->generate($request->input('type_data'));
 
         return redirect()->route('reports.create')->with(['status' => 'Report has been added to queue.']);
     }
