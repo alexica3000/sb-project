@@ -7,14 +7,15 @@ use App\Models\News;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\User;
+use Illuminate\Support\Collection;
 
 class ReportService
 {
     const DATA_TYPES = ['News', 'Posts', 'Comments', 'Tags', 'Users'];
 
-    public function generate(array $data)
+    public function generate(array $data) : Collection
     {
-
+        return collect($this->getData($data));
     }
 
     private function getCountData(string $type) : int
