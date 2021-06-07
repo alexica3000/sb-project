@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\NewsController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\Front\PageController;
 use App\Http\Controllers\Admin\MessageController;
@@ -32,6 +33,11 @@ Route::prefix('/dashboard')->middleware(['auth'])->group(function() {
         Route::get('/pushall-form', [PushServiceController::class, 'form'])->name('pushall.form');
         Route::post('/pushall-send', [PushServiceController::class, 'send'])->name('pushall.send');
         Route::resource('news', NewsController::class);
+
+        Route::prefix('reports')->group(function() {
+            Route::get('/', [ReportController::class, 'index'])->name('reports.create');
+            Route::post('/generate', [ReportController::class, 'generate'])->name('reports.generate');
+        });
     });
 });
 
