@@ -11,7 +11,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class PostUpdatedEvent
+class PostUpdatedEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -20,5 +20,10 @@ class PostUpdatedEvent
     public function __construct(Post $post)
     {
         $this->post = $post;
+    }
+
+    public function broadcastOn()
+    {
+        return new Channel('post_updated');
     }
 }
