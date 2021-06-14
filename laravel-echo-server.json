@@ -11,10 +11,7 @@
 	"databaseConfig": {
 		"redis": {
             "host": "redis"
-        },
-		"sqlite": {
-			"databasePath": "/database/laravel-echo-server.sqlite"
-		}
+        }
 	},
 	"devMode": true,
 	"host": null,
