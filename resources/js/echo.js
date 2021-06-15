@@ -1,6 +1,6 @@
 Echo
-    .channel('post_updated')
-    .listen('PostUpdatedEvent', e => {
+    .channel('test')
+    .listen('TestEvent', e => {
         alert('test');
         console.log('test');
     });
