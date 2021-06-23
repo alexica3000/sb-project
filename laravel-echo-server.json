@@ -10,7 +10,8 @@
 	"database": "redis",
 	"databaseConfig": {
 		"redis": {
-            "host": "redis"
+            "host": "redis",
+            "keyPrefix": ""
         }
 	},
 	"devMode": true,
@@ -28,7 +29,7 @@
 		"redis": true
 	},
 	"apiOriginAllow": {
-		"allowCors": false,
+		"allowCors": true,
 		"allowOrigin": "",
 		"allowMethods": "",
 		"allowHeaders": ""

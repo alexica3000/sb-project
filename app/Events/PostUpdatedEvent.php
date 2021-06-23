@@ -22,8 +22,8 @@ class PostUpdatedEvent implements ShouldBroadcast
         $this->post = $post;
     }
 
-    public function broadcastOn()
+    public function broadcastOn() : Channel
     {
-        return new Channel('post_updated');
+        return new Channel('admins');
     }
 }

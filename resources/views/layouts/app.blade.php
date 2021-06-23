@@ -12,16 +12,6 @@
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
         <script src="{{ asset('js/app.js') }}"></script>
-
-{{--        <script>--}}
-{{--            Echo.channel('test')--}}
-{{--                .listen('TestEvent', e => {--}}
-{{--                    console.log('test')--}}
-{{--                    alert('test')--}}
-{{--                })--}}
-{{--        </script>--}}
-
-
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">

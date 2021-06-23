@@ -46,6 +46,7 @@ require __DIR__.'/auth.php';
 
 Route::get('/test', function () {
     event(new \App\Events\TestEvent());
+
     return 'ok';
 });
 
