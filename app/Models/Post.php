@@ -54,4 +54,14 @@ class Post extends Model implements HasCommentsInterface
     {
         return $this->morphMany(Comment::class, 'commentable');
     }
+
+    public function histories()
+    {
+        return $this->hasMany(PostHistory::class, 'post_id', 'id');
+    }
+
+    public function latestHistory() : PostHistory
+    {
+        return $this->histories()->latest()->first();
+    }
 }
