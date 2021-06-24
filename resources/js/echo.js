@@ -8,7 +8,7 @@ Echo
     });
 
 Echo
-    .channel('admins')
+    .private('admins')
     .listen('PostUpdatedEvent', e => {
         let text = `The post <strong>${e.post.title}</strong> has been modified.<br>`;
         let link = `Post - <a href="/posts/show/${e.post.id}"> ${e.post.title}</a>`;

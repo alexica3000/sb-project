@@ -27,6 +27,6 @@ class PostUpdatedEvent implements ShouldBroadcast
 
     public function broadcastOn() : Channel
     {
-        return new Channel('admins');
+        return new PrivateChannel('admins');
     }
 }

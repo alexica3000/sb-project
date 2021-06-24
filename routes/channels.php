@@ -1,6 +1,5 @@
 <?php
 
-use App\Broadcasting\NewsUpdatedChannel;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -19,5 +18,5 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 });
 
 Broadcast::channel('admins', function($user) {
-    return true;
+    return $user->isAdmin();
 });
