@@ -11,6 +11,7 @@ class PostHistory extends Pivot
     use HasFactory;
 
     protected $fillable = ['before', 'after'];
+    protected $table = 'post_histories';
 
     protected $casts = [
         'before' => 'array',
