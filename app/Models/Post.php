@@ -9,6 +9,7 @@ use App\Models\Interfaces\HasCommentsInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
 
 class Post extends Model implements HasCommentsInterface
 {
@@ -32,6 +33,18 @@ class Post extends Model implements HasCommentsInterface
                 'before' => Arr::only($post->fresh()->toArray(), array_keys($after)),
                 'after'  => $after,
             ]);
+        });
+
+        static::created(function() {
+            Cache::tags(['posts'])->flush();
+        });
+
+        static::updated(function() {
+            Cache::tags(['posts'])->flush();
+        });
+
+        static::deleted(function() {
+            Cache::tags(['posts'])->flush();
         });
     }
 
