@@ -7,13 +7,15 @@ use App\Http\Requests\News\StoreNewsRequest;
 use App\Http\Requests\TagsRequest;
 use App\Http\Services\TagsSynchronizer;
 use App\Models\News;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class NewsController extends Controller
 {
     public function index()
     {
-        $news = News::query()->latest()->paginate();
+        $news = Cache::tags(['news'])->remember('index_news', 3600, function() {
+            return News::query()->latest()->paginate();
+        });
 
         return view('admin.news.index', compact('news'));
     }

@@ -61,7 +61,9 @@ class PostController extends Controller
 
     public function allPosts()
     {
-        $posts = Post::latest()->paginate(20);
+        $posts = Cache::tags(['posts'])->remember('all_posts', 3600, function() {
+            return Post::latest()->paginate(20);
+        });
 
         return view('admin.posts.index', compact('posts'));
     }
