@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Cache;
 
 class User extends Authenticatable
 {
@@ -40,6 +41,23 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function() {
+            Cache::tags(['users'])->flush();
+        });
+
+        static::updated(function() {
+            Cache::tags(['users'])->flush();
+        });
+
+        static::deleted(function() {
+            Cache::tags(['users'])->flush();
+        });
+    }
 
     public function posts()
     {

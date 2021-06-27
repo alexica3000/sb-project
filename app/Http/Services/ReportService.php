@@ -7,6 +7,7 @@ use App\Models\News;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\User;
+use Illuminate\Support\Facades\Cache;
 
 class ReportService
 {
@@ -21,11 +22,17 @@ class ReportService
     {
         switch ($type) {
             case 'News':
-                return News::query()->isActive()->count('id');
+                return Cache::tags(['news'])->remember('report_news', 3600, function() {
+                    return News::query()->isActive()->count('id');
+                });
             case 'Posts':
-                return Post::query()->where('is_published', 1)->count('id');
+                return Cache::tags(['posts'])->remember('report_posts', 3600, function() {
+                    return Post::query()->where('is_published', 1)->count('id');
+                });
             case 'Comments':
-                return Comment::query()->count('id');
+                return Cache::tags(['comments'])->remember('report_comments', 3600, function() {
+                    return Comment::query()->count('id');
+                });
             case 'Tags':
                 return Tag::query()->count('id');
             default:

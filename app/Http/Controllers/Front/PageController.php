@@ -10,6 +10,7 @@ use App\Models\Post;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class PageController extends Controller
 {
@@ -68,14 +69,37 @@ class PageController extends Controller
 
     public function statistics()
     {
-        $totalPosts = Post::query()->where('is_published', 1)->count('id');
-        $totalNews = News::query()->isActive()->count('id');
-        $userMostPosts = User::query()->withCount('posts')->orderBy('posts_count', 'desc')->first();
-        $longestPost = Post::query()->where('is_published', 1)->orderByRaw('CHAR_LENGTH(body) DESC')->first();
-        $shortestPost = Post::query()->where('is_published', 1)->orderByRaw('CHAR_LENGTH(body) ASC')->first();
-        $avgPosts = User::query()->has('posts', '>=', 1)->withCount('posts')->get()->average('posts_count');
-        $postVolatile = Post::query()->withCount('history')->orderBy('history_count', 'desc')->first();
-        $postMostDiscussed = Post::query()->withCount('comments')->orderBy('comments_count', 'desc')->first();
+        $totalPosts = Cache::tags(['posts'])->remember('statistics|totalPosts', 3600, function() {
+            return Post::query()->where('is_published', 1)->count('id');
+        });
+
+        $totalNews = Cache::tags(['news'])->remember('statistics|totalNews', 3600, function() {
+            return News::query()->isActive()->count('id');
+        });
+
+        $userMostPosts = Cache::tags(['users'])->remember('statistics|userMostPosts', 3600, function() {
+            return User::query()->withCount('posts')->orderBy('posts_count', 'desc')->first();
+        });
+
+        $longestPost = Cache::tags(['posts'])->remember('statistics|longestPost', 3600, function() {
+            return Post::query()->where('is_published', 1)->orderByRaw('CHAR_LENGTH(body) DESC')->first();
+        });
+
+        $shortestPost = Cache::tags(['posts'])->remember('statistics|shortestPost', 3600, function() {
+            return Post::query()->where('is_published', 1)->orderByRaw('CHAR_LENGTH(body) ASC')->first();
+        });
+
+        $avgPosts = Cache::tags(['users'])->remember('statistics|avgPosts', 3600, function() {
+            return User::query()->has('posts', '>=', 1)->withCount('posts')->get()->average('posts_count');
+        });
+
+        $postVolatile = Cache::tags(['posts'])->remember('statistics|postVolatile', 3600, function() {
+            return Post::query()->withCount('history')->orderBy('history_count', 'desc')->first();
+        });
+
+        $postMostDiscussed = Cache::tags(['posts'])->remember('statistics|postMostDiscussed', 3600, function() {
+            return Post::query()->withCount('comments')->orderBy('comments_count', 'desc')->first();
+        });
 
         return view('front.pages.statistics', compact('totalPosts', 'totalNews', 'userMostPosts', 'longestPost', 'shortestPost', 'avgPosts', 'postMostDiscussed', 'postVolatile'));
     }
