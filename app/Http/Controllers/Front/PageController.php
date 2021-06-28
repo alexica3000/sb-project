@@ -16,7 +16,9 @@ class PageController extends Controller
 {
     public function home()
     {
-        $posts = Post::where('is_published', 1)->with(['tags'])->orderBy('created_at', 'desc')->paginate(10);
+        $posts = Cache::tags(['posts'])->remember('front|posts', 3600, function() {
+            return Post::where('is_published', 1)->with(['tags'])->orderBy('created_at', 'desc')->paginate(10);
+        });
 
         return view('front.pages.home', compact('posts'));
     }
@@ -55,7 +57,9 @@ class PageController extends Controller
 
     public function news()
     {
-        $news = News::query()->isActive()->latest()->paginate(10);
+        $news = Cache::tags(['posts'])->remember('front|news', 3600, function() {
+            return News::query()->isActive()->latest()->paginate(10);
+        });
 
         return view('front.pages.news', compact('news'));
     }
