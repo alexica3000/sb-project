@@ -16,7 +16,7 @@ class PageController extends Controller
 {
     public function home()
     {
-        $posts = Cache::tags(['posts'])->remember('front|posts', 3600, function() {
+        $posts = Cache::tags(['posts', 'tags'])->remember('front|posts', 3600, function() {
             return Post::where('is_published', 1)->with(['tags'])->orderBy('created_at', 'desc')->paginate(10);
         });
 
@@ -81,7 +81,7 @@ class PageController extends Controller
             return News::query()->isActive()->count('id');
         });
 
-        $userMostPosts = Cache::tags(['users'])->remember('statistics|userMostPosts', 3600, function() {
+        $userMostPosts = Cache::tags(['users', 'posts'])->remember('statistics|userMostPosts', 3600, function() {
             return User::query()->withCount('posts')->orderBy('posts_count', 'desc')->first();
         });
 
@@ -93,7 +93,7 @@ class PageController extends Controller
             return Post::query()->where('is_published', 1)->orderByRaw('CHAR_LENGTH(body) ASC')->first();
         });
 
-        $avgPosts = Cache::tags(['users'])->remember('statistics|avgPosts', 3600, function() {
+        $avgPosts = Cache::tags(['users', 'posts'])->remember('statistics|avgPosts', 3600, function() {
             return User::query()->has('posts', '>=', 1)->withCount('posts')->get()->average('posts_count');
         });
 
@@ -101,7 +101,7 @@ class PageController extends Controller
             return Post::query()->withCount('history')->orderBy('history_count', 'desc')->first();
         });
 
-        $postMostDiscussed = Cache::tags(['posts'])->remember('statistics|postMostDiscussed', 3600, function() {
+        $postMostDiscussed = Cache::tags(['posts', 'comments'])->remember('statistics|postMostDiscussed', 3600, function() {
             return Post::query()->withCount('comments')->orderBy('comments_count', 'desc')->first();
         });
 

@@ -2,31 +2,20 @@
 
 namespace App\Models;
 
+use App\Models\Traits\CacheableTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 
 class Comment extends Model
 {
-    use HasFactory;
+    use HasFactory, CacheableTrait;
 
     protected $fillable = ['body', 'user_id'];
 
-    protected static function boot()
+    protected static function cacheTags(): array
     {
-        parent::boot();
-
-        static::created(function() {
-            Cache::tags(['comments'])->flush();
-        });
-
-        static::updated(function() {
-            Cache::tags(['comments'])->flush();
-        });
-
-        static::deleted(function() {
-            Cache::tags(['comments'])->flush();
-        });
+        return ['comments'];
     }
 
     public function user()

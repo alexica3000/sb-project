@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\CacheableTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -10,7 +11,7 @@ use Illuminate\Support\Facades\Cache;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, CacheableTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -42,21 +43,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    protected static function boot()
+    protected static function cacheTags(): array
     {
-        parent::boot();
-
-        static::created(function() {
-            Cache::tags(['users'])->flush();
-        });
-
-        static::updated(function() {
-            Cache::tags(['users'])->flush();
-        });
-
-        static::deleted(function() {
-            Cache::tags(['users'])->flush();
-        });
+        return ['users'];
     }
 
     public function posts()

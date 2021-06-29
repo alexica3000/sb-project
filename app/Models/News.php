@@ -3,31 +3,20 @@
 namespace App\Models;
 
 use App\Models\Interfaces\HasCommentsInterface;
+use App\Models\Traits\CacheableTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 
 class News extends Model implements HasCommentsInterface
 {
-    use HasFactory;
+    use HasFactory, CacheableTrait;
 
     protected $fillable = ['title', 'short', 'body', 'is_published'];
 
-    protected static function boot()
+    protected static function cacheTags() : array
     {
-        parent::boot();
-
-        static::created(function() {
-            Cache::tags(['news'])->flush();
-        });
-
-        static::updated(function() {
-            Cache::tags(['news'])->flush();
-        });
-
-        static::deleted(function() {
-            Cache::tags(['news'])->flush();
-        });
+        return ['news'];
     }
 
     public function user()
