@@ -7,12 +7,15 @@ use App\Http\Requests\Posts\StorePostRequest;
 use App\Http\Requests\TagsRequest;
 use App\Http\Services\TagsSynchronizer;
 use App\Models\Post;
+use Illuminate\Support\Facades\Cache;
 
 class PostController extends Controller
 {
     public function index()
     {
-        $posts = auth()->user()->posts()->orderBy('id', 'desc')->paginate(20);
+        $posts = Cache::tags(['posts'])->remember('index_posts|' . auth()->id(), 3600, function() {
+            return auth()->user()->posts()->orderBy('id', 'desc')->paginate(20);
+        });
 
         return view('admin.posts.index', compact('posts'));
     }
@@ -58,7 +61,9 @@ class PostController extends Controller
 
     public function allPosts()
     {
-        $posts = Post::latest()->paginate(20);
+        $posts = Cache::tags(['posts'])->remember('all_posts', 3600, function() {
+            return Post::latest()->paginate(20);
+        });
 
         return view('admin.posts.index', compact('posts'));
     }

@@ -3,14 +3,21 @@
 namespace App\Models;
 
 use App\Models\Interfaces\HasCommentsInterface;
+use App\Models\Traits\CacheableTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class News extends Model implements HasCommentsInterface
 {
-    use HasFactory;
+    use HasFactory, CacheableTrait;
 
     protected $fillable = ['title', 'short', 'body', 'is_published'];
+
+    protected static function cacheTags() : array
+    {
+        return ['news'];
+    }
 
     public function user()
     {

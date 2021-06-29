@@ -2,14 +2,21 @@
 
 namespace App\Models;
 
+use App\Models\Traits\CacheableTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class Tag extends Model
 {
-    use HasFactory;
+    use HasFactory, CacheableTrait;
 
     protected $fillable = ['name'];
+
+    protected static function cacheTags(): array
+    {
+        return ['tags'];
+    }
 
     public function posts()
     {

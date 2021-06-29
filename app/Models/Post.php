@@ -6,13 +6,15 @@ use App\Events\PostCreatedEvent;
 use App\Events\PostDeletedEvent;
 use App\Events\PostUpdatedEvent;
 use App\Models\Interfaces\HasCommentsInterface;
+use App\Models\Traits\CacheableTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
 
 class Post extends Model implements HasCommentsInterface
 {
-    use HasFactory;
+    use HasFactory, CacheableTrait;
 
     protected $fillable = ['title', 'alias', 'short', 'body', 'is_published'];
 
@@ -21,6 +23,11 @@ class Post extends Model implements HasCommentsInterface
         'updated' => PostUpdatedEvent::class,
         'deleted' => PostDeletedEvent::class,
     ];
+
+    protected static function cacheTags(): array
+    {
+        return ['posts'];
+    }
 
     protected static function boot()
     {
